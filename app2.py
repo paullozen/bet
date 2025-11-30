@@ -46,7 +46,7 @@ else:
     USERNAME = input("Digite o usuário Bet365: ")
     PASSWORD = input("Digite a senha Bet365: ")
 
-PROFILE_NAME = "a"
+
 TARGET_URL = config["TARGET_URL"]
 BROWSER_CHANNEL = config["BROWSER_CHANNEL"]
 COMPETITIONS_TO_RUN = config["COMPETITIONS"]
@@ -57,7 +57,7 @@ POLLING_INTERVAL = config.get("POLLING_INTERVAL", 60)
 CONSECUTIVE_NONE_LIMIT = config.get("CONSECUTIVE_NONE_LIMIT", 3)
 REST_TIME = config.get("REST_TIME", 60)
 
-PROFILE_PATH = ROOT / "chrome_profiles" / PROFILE_NAME
+
 
 # Mapeamento de competições
 competitions_map = {
@@ -68,13 +68,8 @@ competitions_map = {
 }
 
 async def main():
-    if not PROFILE_PATH.exists():
-        print(f"❌ Profile path not found: {PROFILE_PATH}")
-        print("Please run profile_generator.py first to create the profile.")
-        return
+    print(f"🚀 Launching browser...")
 
-    print(f"🚀 Launching using profile: {PROFILE_NAME}")
-    print(f"📂 Profile Path: {PROFILE_PATH}")
     
     # Tenta matar processos Chrome que possam estar usando o perfil
     print("🔍 Verificando processos Chrome existentes...")
@@ -88,23 +83,19 @@ async def main():
                 text=True
             )
 
-            context = await p.chromium.launch_persistent_context(
-                user_data_dir=PROFILE_PATH,
+            browser = await p.chromium.launch(
                 channel=BROWSER_CHANNEL,
                 headless=False,
                 args=[
                     "--no-default-browser-check",
                     "--disable-infobars",
                     "--start-maximized"
-                ],
-                viewport={"width": 1280, "height": 720}
+                ]
             )
+            context = await browser.new_context(viewport={"width": 1280, "height": 720})
         except Exception as e:
-            if "Target" in str(e) and "closed" in str(e):
-                print(f"\n❌ ERRO: O Chrome fechou inesperadamente. O perfil pode estar em uso.")
-                return
-            else:
-                raise
+            print(f"❌ Erro ao iniciar o browser: {e}")
+            return
 
         # Scripts anti-detecção
         await context.add_init_script("""
