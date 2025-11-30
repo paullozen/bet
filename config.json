@@ -1,0 +1,15 @@
+{
+    "USERNAME": "Douglas_lima3",
+    "PASSWORD": "#Carnaval20",
+    "TARGET_URL": "https://extra.bet365.bet.br/results/br?li=1",
+    "BROWSER_CHANNEL": "chrome",
+    "COMPETITIONS": [
+        "Euro Cup",
+        "Premiere League",
+        "Sul Americano",
+        "Copa do Mundo"
+    ],
+    "MAX_MATCHES": 0,
+    "DELAY_MIN": 0.5,
+    "DELAY_MAX": 1.5
+}
