@@ -13,6 +13,9 @@ def calcular_padroes(df):
     2x: Compara com 3º anterior
     1x: Compara com 2º anterior
     """
+    if df.empty:
+        return df
+
     # Garante que está ordenado por Competição e Horário
     # Convertendo Hora e Minuto para garantir ordenação correta
     df['Hora_Num'] = pd.to_numeric(df['Hora'], errors='coerce').fillna(0)
@@ -56,10 +59,27 @@ def calcular_padroes(df):
 
     # Aplica a função agrupando por competição
     # group_keys=False para manter o índice original ou evitar multi-index desnecessário
-    df_processado = df.groupby('Competição', group_keys=False).apply(processar_grupo)
+    df_processado = df.groupby('Competição', group_keys=False).apply(processar_grupo, include_groups=False)
+    
+    # Se 'Competição' sumiu (por causa do include_groups=False), precisamos restaurá-la ou garantir que ela não seja necessária no retorno se o índice for preservado.
+    # O apply com include_groups=False remove a coluna de agrupamento do df passado para a função.
+    # Mas como estamos retornando o grupo modificado, e o índice original é preservado, a coluna Competição deve estar no df original.
+    # Porém, o resultado do apply pode não ter a coluna Competição se ela foi excluída.
+    # Vamos ajustar a estratégia:
+    # Melhor: Iterar pelos grupos manualmente para evitar warnings e complexidade do apply novo.
+    
+    dfs = []
+    for name, group in df.groupby('Competição'):
+        dfs.append(processar_grupo(group.copy()))
+    
+    if dfs:
+        df_processado = pd.concat(dfs)
+    else:
+        df_processado = df
     
     # Remove colunas auxiliares
-    df_processado = df_processado.drop(columns=['Hora_Num', 'Minuto_Num'])
+    if 'Hora_Num' in df_processado.columns:
+        df_processado = df_processado.drop(columns=['Hora_Num', 'Minuto_Num'])
     
     return df_processado
 
@@ -70,7 +90,7 @@ def atualizar_arquivo_hoje():
     ROOT = Path(__file__).resolve().parent
     date_str = datetime.now().strftime('%d-%m-%Y')
     csv_filename = f"matches_{date_str}.csv"
-    csv_path = ROOT / csv_filename
+    csv_path = ROOT / "historico" / csv_filename
     
     if not csv_path.exists():
         print(f"⚠️ Arquivo {csv_filename} não encontrado para atualização de padrões.")
