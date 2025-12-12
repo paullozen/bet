@@ -1,0 +1,16 @@
+{
+  "name": "bet365-scraper",
+  "version": "1.0.0",
+  "description": "Node.js scraper for Bet365 Virtual Football",
+  "main": "scraper.js",
+  "scripts": {
+    "start": "node scraper.js"
+  },
+  "dependencies": {
+    "playwright": "^1.40.0",
+    "csv-writer": "^1.6.0",
+    "fs-extra": "^11.2.0",
+    "dayjs": "^1.11.10",
+    "async-mutex": "^0.4.0"
+  }
+}
