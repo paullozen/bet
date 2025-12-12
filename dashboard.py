@@ -16,7 +16,7 @@ import padroes
 # ==========================
 ROOT = Path(__file__).resolve().parent
 CONFIG_PATH = ROOT / "config.json"
-APP_SCRIPT = ROOT / "app.py"
+APP_SCRIPT = ROOT / "scraper.js"
 
 # Global State
 class State:
@@ -44,7 +44,7 @@ class State:
             
             # Create JSON
             anchor_data = {}
-            # Default competitions list (should match app.py)
+            # Default competitions list (should match scraper.js)
             comps = self.config.get("COMPETITIONS", ["Euro Cup", "Premier League", "Sul Americano", "Copa do Mundo"])
             
             time_str = f"{h:02d}.00"
@@ -105,8 +105,9 @@ class State:
         
         try:
             # Using Popen to start independent process
+            # [CHANGED] Use 'node' instead of sys.executable
             self.process = subprocess.Popen(
-                [sys.executable, str(APP_SCRIPT)],
+                ["node", str(APP_SCRIPT)],
                 cwd=str(ROOT),
                 creationflags=subprocess.CREATE_NEW_CONSOLE
             )
