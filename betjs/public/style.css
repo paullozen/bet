@@ -1,0 +1,247 @@
+:root {
+  --bg-dark: #121212;
+  --bg-panel: #1e1e1e;
+  --text-primary: #ffffff;
+  --text-secondary: #b0b0b0;
+  --primary-color: #28a745;
+  --danger-color: #dc3545;
+  --accent-color: #17a2b8;
+  --border-color: #333;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+}
+
+body {
+  background-color: var(--bg-dark);
+  color: var(--text-primary);
+  height: 100vh;
+  overflow: hidden;
+}
+
+.app-container {
+  display: flex;
+  height: 100%;
+}
+
+/* SIDEBAR */
+.sidebar {
+  width: 280px;
+  background-color: var(--bg-panel);
+  padding: 20px;
+  border-right: 1px solid var(--border-color);
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  overflow-y: auto;
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 20px;
+  color: var(--primary-color);
+}
+.logo h2 {
+  font-size: 1.5rem;
+}
+
+h3 {
+  font-size: 0.9rem;
+  color: var(--text-secondary);
+  text-transform: uppercase;
+  margin-bottom: 10px;
+  letter-spacing: 1px;
+}
+
+.input-group {
+  margin-bottom: 15px;
+}
+.input-group label {
+  display: block;
+  font-size: 0.85rem;
+  margin-bottom: 5px;
+  color: var(--text-secondary);
+}
+.input-group input,
+.input-group select {
+  width: 100%;
+  padding: 8px;
+  background: #2d2d2d;
+  border: 1px solid #444;
+  color: white;
+  border-radius: 4px;
+  outline: none;
+}
+.input-group input:focus,
+.input-group select:focus {
+  border-color: var(--primary-color);
+}
+
+.btn {
+  padding: 10px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-weight: bold;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+  transition: opacity 0.2s;
+}
+.btn:hover {
+  opacity: 0.9;
+}
+.btn.primary {
+  background-color: var(--primary-color);
+  color: white;
+}
+.btn.secondary {
+  background-color: var(--accent-color);
+  color: white;
+}
+.btn.success {
+  background-color: var(--primary-color);
+  color: white;
+}
+.btn.danger {
+  background-color: var(--danger-color);
+  color: white;
+}
+.full-width {
+  width: 100%;
+}
+
+.divider {
+  height: 1px;
+  background-color: var(--border-color);
+  margin: 10px 0;
+}
+
+/* MAIN CONTENT */
+.main-content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.top-bar {
+  height: 60px;
+  background-color: var(--bg-panel);
+  border-bottom: 1px solid var(--border-color);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 20px;
+}
+
+.status-indicator {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-weight: bold;
+}
+.status-dot {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background-color: #555;
+}
+.status-dot.running {
+  background-color: var(--primary-color);
+  box-shadow: 0 0 8px var(--primary-color);
+}
+.status-dot.stopped {
+  background-color: var(--danger-color);
+}
+
+.actions {
+  display: flex;
+  gap: 10px;
+}
+
+.content-area {
+  flex: 1;
+  padding: 20px;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+/* MATRICES */
+.matrices-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 20px;
+}
+
+.card {
+  background-color: var(--bg-panel);
+  border-radius: 8px;
+  padding: 15px;
+  border: 1px solid var(--border-color);
+}
+.card-header {
+  font-size: 1.1rem;
+  font-weight: bold;
+  margin-bottom: 10px;
+  border-bottom: 1px solid var(--border-color);
+  padding-bottom: 5px;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.85rem;
+}
+th,
+td {
+  border: 1px solid #333;
+  padding: 4px;
+  text-align: center;
+}
+th {
+  background-color: #252525;
+}
+.res-sim {
+  background-color: var(--primary-color);
+  color: white;
+}
+.res-nao {
+  background-color: var(--danger-color);
+  color: white;
+}
+.res-empty {
+  background-color: #333;
+}
+
+/* LOGS */
+.logs-container {
+  background-color: var(--bg-panel);
+  border-radius: 8px;
+  padding: 15px;
+  border: 1px solid var(--border-color);
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  min-height: 200px;
+}
+.console {
+  flex: 1;
+  background-color: #000;
+  color: #0f0;
+  font-family: "Consolas", monospace;
+  padding: 10px;
+  overflow-y: auto;
+  border-radius: 4px;
+  font-size: 0.8rem;
+  white-space: pre-wrap;
+}

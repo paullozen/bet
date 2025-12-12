@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Bet365 Auto Dashboard</title>
+    <link rel="stylesheet" href="style.css" />
+    <link
+      href="https://fonts.googleapis.com/icon?family=Material+Icons"
+      rel="stylesheet"
+    />
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/dayjs@1/dayjs.min.js"></script>
+  </head>
+  <body class="dark-mode">
+    <div class="app-container">
+      <!-- SIDEBAR -->
+      <aside class="sidebar">
+        <div class="logo">
+          <span class="material-icons">sports_soccer</span>
+          <h2>BetJS</h2>
+        </div>
+
+        <div class="config-section">
+          <h3>Configurações</h3>
+          <div class="input-group">
+            <label>Usuário</label>
+            <input type="text" id="cfg-username" />
+          </div>
+          <div class="input-group">
+            <label>Senha</label>
+            <input type="password" id="cfg-password" />
+          </div>
+          <div class="input-group">
+            <label>Janela (Horas)</label>
+            <input type="number" id="cfg-lookback" min="1" />
+          </div>
+          <button id="btn-save-config" class="btn primary full-width">
+            Salvar Config
+          </button>
+        </div>
+
+        <div class="divider"></div>
+
+        <div class="anchor-section">
+          <h3>Anchor Time</h3>
+          <div class="input-group">
+            <label>Hora (Ex: 14)</label>
+            <input type="number" id="anchor-hour" min="0" max="23" />
+          </div>
+          <button id="btn-set-anchor" class="btn secondary full-width">
+            Setar Anchor
+          </button>
+        </div>
+
+        <div class="divider"></div>
+
+        <div class="view-section">
+          <h3>Visualização</h3>
+          <div class="input-group">
+            <label>Últimas X Horas</label>
+            <input type="number" id="filter-last-hours" min="1" placeholder="Ex: 4" />
+          </div>
+          <div class="input-group">
+            <label>Data</label>
+            <select id="date-select"></select>
+          </div>
+          <div class="input-group">
+            <label>Padrão</label>
+            <select id="pattern-select">
+              <option value="Ambos Marcam">Resultados</option>
+              <option value="1x">Padrão 1x</option>
+              <option value="2x">Padrão 2x</option>
+              <option value="3x">Padrão 3x</option>
+              <option value="4x">Padrão 4x</option>
+              <option value="5x">Padrão 5x</option>
+            </select>
+          </div>
+        </div>
+      </aside>
+
+      <!-- MAIN CONTENT -->
+      <main class="main-content">
+        <header class="top-bar">
+          <div class="status-indicator">
+            <span class="status-dot" id="status-dot"></span>
+            <span id="status-text">Parado</span>
+          </div>
+          <div class="actions">
+            <button id="btn-start" class="btn success">
+              <span class="material-icons">play_arrow</span> Iniciar
+            </button>
+            <button id="btn-stop" class="btn danger">
+              <span class="material-icons">stop</span> Parar
+            </button>
+          </div>
+        </header>
+
+        <div class="content-area">
+          <!-- MATRICES -->
+          <section id="matrices-container" class="matrices-grid">
+            <!-- Matrices injected here -->
+          </section>
+
+          <!-- ANALYSIS -->
+          <section id="analysis-container" class="analysis-section">
+            <div class="card">
+              <div class="card-header">📊 Análise de Padrões - Oportunidades</div>
+              <div id="analysis-output"></div>
+            </div>
+          </section>
+
+          <!-- LOGS -->
+          <section class="logs-container">
+            <h3>Logs do Sistema</h3>
+            <div id="console-output" class="console"></div>
+          </section>
+        </div>
+      </main>
+    </div>
+
+    <script src="app.js"></script>
+  </body>
+</html>

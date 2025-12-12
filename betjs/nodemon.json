@@ -1,0 +1,8 @@
+{
+  "ignore": [
+    "historico/*",
+    "anchor_time/*",
+    "config.json",
+    "public/*"
+  ]
+}
